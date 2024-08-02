@@ -92,7 +92,7 @@
 #global rcrev   .rc0
 
 Name:           git
-Version:        2.39.3
+Version:        2.43.5
 Release:        1%{?rcrev}%{?dist}
 Summary:        Fast Version Control System
 License:        GPLv2
@@ -126,7 +126,7 @@ Source99:       print-failed-test-output
 Patch0:         git-cvsimport-Ignore-cvsps-2.2b1-Branches-output.patch
 Patch1:         0001-Switch-git-instaweb-default-to-apache-2.26.2.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1619113
-Patch2:         git-2.38.1-core-crypto-hmac.patch
+Patch2:         git-2.43.0-core-crypto-hmac.patch
 
 # https://bugzilla.redhat.com/2114531
 # tests: try harder to find open ports for apache, git, and svn
@@ -1099,6 +1099,18 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{?with_docs:%{_pkgdocdir}/git-svn.html}
 
 %changelog
+* Wed Jun 05 2024 Ondřej Pohořelský <opohorel@redhat.com> - 2.43.5-1
+- Update to 2.43.5
+- Related: RHEL-36399, RHEL-36411
+
+* Wed May 15 2024 Ondřej Pohořelský <opohorel@redhat.com> - 2.43.4-1
+- Update to 2.43.4
+- Resolves: RHEL-36399, RHEL-36411
+
+* Wed Dec 06 2023 Ondřej Pohořelský <opohorel@redhat.com> - 2.43.0-1
+- Update to 2.43.0
+- Resolves: RHEL-17103
+
 * Thu Apr 27 2023 Ondřej Pohořelský <opohorel@redhat.com> - 2.39.3-1
 - Update to 2.39.3
 - Resolves: #2188364, #2188373, #2190157, #2190158
