@@ -93,7 +93,7 @@
 
 Name:           git
 Version:        2.43.5
-Release:        1%{?rcrev}%{?dist}
+Release:        2%{?rcrev}%{?dist}
 Summary:        Fast Version Control System
 License:        GPLv2
 URL:            https://git-scm.com/
@@ -137,6 +137,7 @@ Patch3:         0001-t-lib-httpd-try-harder-to-find-a-port-for-apache.patch
 Patch4:         0002-t-lib-git-daemon-try-harder-to-find-a-port.patch
 # https://github.com/tmzullinger/git/commit/aa5105dc11
 Patch5:         0003-t-lib-git-svn-try-harder-to-find-a-port.patch
+Patch6:         CVE-2024-52005.patch
 
 %if %{with docs}
 # pod2man is needed to build Git.3pm
@@ -1099,6 +1100,9 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{?with_docs:%{_pkgdocdir}/git-svn.html}
 
 %changelog
+* Wed Jan 22 2025 Pratham Patel <ppatel@ciq.com> - 2.43.5-2
+- Fix CVE-2024-52005
+
 * Wed Jun 05 2024 Ondřej Pohořelský <opohorel@redhat.com> - 2.43.5-1
 - Update to 2.43.5
 - Related: RHEL-36399, RHEL-36411
