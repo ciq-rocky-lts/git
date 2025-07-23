@@ -93,7 +93,7 @@
 
 Name:           git
 Version:        2.43.5
-Release:        2%{?rcrev}%{?dist}
+Release:        3%{?rcrev}%{?dist}
 Summary:        Fast Version Control System
 License:        GPLv2
 URL:            https://git-scm.com/
@@ -138,6 +138,9 @@ Patch4:         0002-t-lib-git-daemon-try-harder-to-find-a-port.patch
 # https://github.com/tmzullinger/git/commit/aa5105dc11
 Patch5:         0003-t-lib-git-svn-try-harder-to-find-a-port.patch
 Patch6:         CVE-2024-52005.patch
+
+Patch100:       CVE-2025-48384.patch
+Patch102:       CVE-2025-48385.patch
 
 %if %{with docs}
 # pod2man is needed to build Git.3pm
@@ -854,12 +857,16 @@ find %{buildroot}%{_pkgdocdir} -name "*.html" -print0 | xargs -r0 linkchecker
 %endif
 # endif with docs && with linkcheck
 
+# The patch for CVE-2025-48384 adds two new tests, but the tests both
+# fail on versions prior to 2.46.
+GIT_SKIP_TESTS="t1300.220 t7450.49"
+
 # Tests to skip on all releases and architectures
 #
 # t5559-http-fetch-smart-http2 runs t5551-http-fetch-smart with
 # HTTP_PROTO=HTTP/2.  Unfortunately, it fails quite regularly.
 # https://lore.kernel.org/git/Y4fUntdlc1mqwad5@pobox.com/
-GIT_SKIP_TESTS="t5559"
+GIT_SKIP_TESTS="$GIT_SKIP_TESTS t5559"
 
 %if 0%{?rhel} && 0%{?rhel} < 8
 # Skip tests which require mod_http2 on el7
@@ -1100,6 +1107,10 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{?with_docs:%{_pkgdocdir}/git-svn.html}
 
 %changelog
+* Mon Jul 14 2025 Trinity Quirk <tquirk@ciq.com - 2.43.5-3
+- Fix CVE-2025-48384
+- Fix CVE-2025-48385
+
 * Wed Jan 22 2025 Pratham Patel <ppatel@ciq.com> - 2.43.5-2
 - Fix CVE-2024-52005
 
