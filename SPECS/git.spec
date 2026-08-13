@@ -100,7 +100,7 @@
 
 Name:           git
 Version:        2.43.5
-Release:        3%{?rcrev}%{?dist}
+Release:        3%{?rcrev}.1%{?dist}
 Summary:        Fast Version Control System
 License:        GPLv2
 URL:            https://git-scm.com/
@@ -148,6 +148,10 @@ Patch5:         CVE-2024-52005.patch
 
 Patch100:       CVE-2025-48384.patch
 Patch102:       CVE-2025-48385.patch
+# CVE-2024-52006 — upstream backport
+Patch103: git-2.43.5-CVE-2024-52006.patch
+# CVE-2025-27614 — upstream backport
+Patch104: git-2.43.5-CVE-2025-27614.patch
 
 %if %{with docs}
 # pod2man is needed to build Git.3pm
@@ -1127,6 +1131,10 @@ rmdir --ignore-fail-on-non-empty "$testdir"
 %{?with_docs:%{_pkgdocdir}/git-svn.html}
 
 %changelog
+* Wed Aug 12 2026 Jason Rodriguez <jrodriguez@ciq.com> - 2.43.5-3.1
+- Fix CVE-2024-52006
+- Fix CVE-2025-27614
+
 * Mon Jul 14 2025 Trinity Quirk <tquirk@ciq.com - 2.43.5-3
 - Fix CVE-2025-48384
 - Fix CVE-2025-48385
